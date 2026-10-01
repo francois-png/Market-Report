@@ -129,6 +129,40 @@ const YEARLY = {
   },
 };
 
+/* IBESTAT I212002_0004 — housing compraventas by island. Provisional from 2026M01. Cut 2026-09-25. Q3 2026 = Jul only (Aug–Sep unpublished as of 2026-10-01). */
+const IBESTAT_ISLAND_SALES = {
+  source:"IBESTAT I212002_0004 / INE ETDP",
+  note:"2026 months provisional; Q3 2026 incomplete (Jul only)",
+  annual:{
+    y2024:{IB:13824,Mallorca:10614,Menorca:1674,EivissaFormentera:1536},
+    y2025:{IB:14667,Mallorca:11217,Menorca:1672,EivissaFormentera:1778},
+  },
+  quarters:{
+    Q1_2025:{IB:3909,Mallorca:2936,Menorca:500,EivissaFormentera:473},
+    Q2_2025:{IB:3577,Mallorca:2745,Menorca:397,EivissaFormentera:435},
+    Q3_2025:{IB:3617,Mallorca:2796,Menorca:362,EivissaFormentera:459},
+    Q4_2025:{IB:3564,Mallorca:2740,Menorca:413,EivissaFormentera:411},
+    Q1_2026:{IB:3617,Mallorca:2709,Menorca:411,EivissaFormentera:497},
+    Q2_2026:{IB:3178,Mallorca:2340,Menorca:321,EivissaFormentera:517},
+    Q3_2026_partial_Jul:{IB:1211,Mallorca:957,Menorca:124,EivissaFormentera:130},
+  },
+  H1_2026:{IB:6795,Mallorca:5049,Menorca:732,EivissaFormentera:1014},
+  H1_2025:{IB:7486,Mallorca:5681,Menorca:897,EivissaFormentera:908},
+  months_2026:[
+    {m:"2026M01",IB:1197,Mallorca:862,Menorca:151,EivissaFormentera:184},
+    {m:"2026M02",IB:1188,Mallorca:923,Menorca:108,EivissaFormentera:157},
+    {m:"2026M03",IB:1232,Mallorca:924,Menorca:152,EivissaFormentera:156},
+    {m:"2026M04",IB:1051,Mallorca:797,Menorca:89,EivissaFormentera:165},
+    {m:"2026M05",IB:1111,Mallorca:812,Menorca:143,EivissaFormentera:156},
+    {m:"2026M06",IB:1016,Mallorca:731,Menorca:89,EivissaFormentera:196},
+    {m:"2026M07",IB:1211,Mallorca:957,Menorca:124,EivissaFormentera:130},
+  ],
+};
+const REGISTRADORES_2T_2026 = {priceM2:4311,priceM2New:4158,priceM2Used:4347,foreignSharePct:32.27,cashSharePct:23.2,source:"Colegio de Registradores ERI 2T 2026"};
+const CIEN_2026 = {may:{priceM2:4384,yoyPricePct:16.3,mortgages:513,mortgagesYoyPct:-9.7},jun:{priceM2:4056,yoyPricePct:-2.0,salesApprox:1167,yoySalesPct:-11.4},source:"CIEN via Europa Press / Diario de Mallorca"};
+const COAAT_PERMITS = {fy2025:2139,fy2024:2136,h1_2026:1296,h1_2025:1007,h1_2026_pluri:769,h1_2026_uni:527,source:"COAAT Mallorca"};
+
+
 const MONTHLY = [
   {m:"Dec '24",hNBp:5599,hNBs:21,hNBa:1089342,hSHp:4031,hSHs:260,hSHa:748418,fNBp:4285,fNBs:106,fNBa:561980,fSHp:3298,fSHs:1034,fSHa:332310},
   {m:"Jan '25",hNBp:8412,hNBs:13,hNBa:2212409,hSHp:4391,hSHs:212,hSHa:871879,fNBp:5659,fNBs:115,fNBa:587001,fSHp:3646,fSHs:935,fSHa:350523},
@@ -278,6 +312,7 @@ const FOREIGN_SHARE_TIMELINE = [
   {year:"2018",share:32,label:"32%"},{year:"2019",share:33,label:"33%"},{year:"2020",share:31,label:"31%"},
   {year:"2021",share:34,label:"34%"},{year:"2022",share:36,label:"36%"},{year:"2023",share:37,label:"37%"},
   {year:"2024",share:39,label:"39%"},{year:"2025",share:40,label:"40%"},
+  {year:"2026Q2",share:32.3,label:"32.3% Reg."},
 ];
 const FOREIGN_NATIONALITIES = [
   {country:"Germany",pct:37.86,color:"#C0613A",trend:"stable",note:"Dominant — 1 in 3 foreign buyers"},
@@ -2786,9 +2821,9 @@ function Dashboard() {
             <div>
               <p style={{color:T.muted,fontSize:10,textTransform:"uppercase",letterSpacing:2.5,fontWeight:600,marginBottom:6}}>{mode==="permits"?"COAAT Mallorca":mode==="costs"?"INE · Sociedad de Tasación · OTIB":mode==="demand"?"Notaries · INE · Engel & Völkers · Kyero · AENA":"Portal Estadístico del Notariado"}</p>
               {mode==="compare"?(<h1 style={{color:T.text,fontSize:34,fontWeight:800,fontFamily:display,lineHeight:1.1,letterSpacing:-0.5}}>Town Comparison<span style={{color:T.terracotta}}>,</span> Mallorca</h1>):mode==="permits"?(<h1 style={{color:T.text,fontSize:34,fontWeight:800,fontFamily:display,lineHeight:1.1,letterSpacing:-0.5}}>Housing Permits<span style={{color:T.sand}}>,</span> Mallorca</h1>):mode==="costs"?(<h1 style={{color:T.text,fontSize:34,fontWeight:800,fontFamily:display,lineHeight:1.1,letterSpacing:-0.5}}>Construction Costs<span style={{color:T.clay}}> &</span> Labour</h1>):mode==="demand"?(<h1 style={{color:T.text,fontSize:34,fontWeight:800,fontFamily:display,lineHeight:1.1,letterSpacing:-0.5}}>Foreign Buyer<span style={{color:T.plum}}> Demand</span></h1>):(<h1 style={{color:T.text,fontSize:34,fontWeight:800,fontFamily:display,lineHeight:1.1,letterSpacing:-0.5}}>{TD.name}<span style={{color:TD.color}}>,</span> Mallorca</h1>)}
-              <p style={{color:T.textMid,fontSize:13,marginTop:4}}>{mode==="compare"?"Compare property markets across municipalities":mode==="permits"?"New construction permits granted · 2014–2024":mode==="costs"?"Construction costs, labour market & affordability indicators":mode==="demand"?"Transaction data, search demand, buyer nationalities & market drivers":"Property Market Analysis"} · {mode==="permits"?"COAAT Mallorca":mode==="costs"?"Baleares · 2024–2025":mode==="demand"?"Balearics · Feb 2026":"Dec 2024 – Nov 2025"}</p>
+              <p style={{color:T.textMid,fontSize:13,marginTop:4}}>{mode==="compare"?"Compare property markets across municipalities":mode==="permits"?"New construction permits granted · COAAT through H1 2026":mode==="costs"?"Construction costs, labour market & affordability indicators":mode==="demand"?"Transaction data, search demand, buyer nationalities & market drivers":"Property Market Analysis"} · {mode==="permits"?"COAAT Mallorca · to H1 2026":mode==="costs"?"Baleares · 2025–H1 2026":mode==="demand"?"Balearics · IBESTAT to Jul-26":"Municipal · Dec 2024 – Nov 2025"}</p>
             </div>
-            <div style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:6}}><Badge color={mode==="permits"?T.sand:mode==="costs"?T.clay:mode==="demand"?T.plum:T.olive}>{mode==="permits"?"Mallorca":mode==="costs"?"Baleares":mode==="demand"?"Balearic Islands":"Illes Balears"}</Badge><span style={{color:T.muted,fontSize:10}}>Report: 06/02/2026</span></div>
+            <div style={{display:"flex",flexDirection:"column",alignItems:"flex-end",gap:6}}><Badge color={mode==="permits"?T.sand:mode==="costs"?T.clay:mode==="demand"?T.plum:T.olive}>{mode==="permits"?"Mallorca":mode==="costs"?"Baleares":mode==="demand"?"Balearic Islands":"Illes Balears"}</Badge><span style={{color:T.muted,fontSize:10}}>Report: 01/10/2026 · Q3 cut</span></div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:0}}>
             <button onClick={()=>setMode("compare")} style={{padding:"10px 22px",border:"none",cursor:"pointer",fontSize:12,fontWeight:700,fontFamily:font,background:"transparent",color:mode==="compare"?T.text:T.muted,borderBottom:mode==="compare"?`2.5px solid ${T.terracotta}`:"2.5px solid transparent",transition:"all 0.2s",letterSpacing:0.2}}>⇔ Compare Towns</button>
